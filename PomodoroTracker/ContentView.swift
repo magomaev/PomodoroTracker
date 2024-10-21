@@ -2,10 +2,11 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentTheme: AppTheme = AppStyles.creamyTheme
+    @StateObject private var timerWidget = TimerWidget(theme: AppStyles.creamyTheme)
     
     var body: some View {
         VStack(spacing: AppStyles.Layout.gapBetweenContainers) {
-            TimerFrame(theme: currentTheme)
+            TimerWidgetView(timerWidget: timerWidget)
             BreakFrame(theme: currentTheme)
         }
         .padding()

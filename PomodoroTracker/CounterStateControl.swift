@@ -1,20 +1,10 @@
 import SwiftUI
 
-enum ButtonState {
-    case resume
-    case stop
-    case pause
-    
-    var text: String {
-        switch self {
-        case .resume:
-            return "RESUME"
-        case .stop:
-            return "STOP"
-        case .pause:
-            return "PAUSE"
-        }
-    }
+enum ButtonState: String {
+    case start = "START"
+    case stop = "STOP"
+    case pause = "PAUSE"
+    case resume = "RESUME"
 }
 
 struct CounterStateControl: View {
@@ -24,7 +14,7 @@ struct CounterStateControl: View {
     
     var body: some View {
         Button(action: action) {
-            Text(state.text)
+            Text(state.rawValue)
                 .font(AppStyles.Typography.defaultStyle)
                 .foregroundColor(theme.textPrimary)
                 .frame(maxWidth: .infinity)

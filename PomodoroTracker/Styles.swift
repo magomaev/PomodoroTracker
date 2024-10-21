@@ -56,6 +56,8 @@ struct AppStyles {
         )
     )
     
+    static let defaultTheme = creamyTheme
+    
     struct Typography {
         static let timerStyle = Font.system(size: 100, weight: .regular, design: .monospaced)
         static let defaultStyle = Font.system(size: 20, weight: .regular, design: .monospaced)
