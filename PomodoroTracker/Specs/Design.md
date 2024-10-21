@@ -1,0 +1,132 @@
+# Design
+
+Intro:
+
+Bellow list of styling that described by natural language, process them to the code freandly syntax
+
+- Level 1 – Component
+- Level 2 – Component state (if exist sub-level 3) or styling with link to the cross style tokens from style file
+- Level 3 – Component styling with link to the cross style tokens from style file or can be extra sub-level for frame or component
+- Level 4 – style used in several components or Component styling with link to the cross style tokens from style file
+
+Designs:
+
+- App has themes with list of colors and other style, where components used token from selected theme
+    - Selected theme:
+        - creamy
+    - List of themes:
+        - creamy (by default)
+        - green
+- Main screen
+    - gap between container: gap_between_containers
+    - bg: primary
+    - padding top: 80px
+    - padding bottom: 40px
+- TimerFrame, BreakFrame
+    - expanded
+        - Frame opacity: 100%
+        - width: fill
+        - height: fill
+    - collapsed
+        - Frame opacity: 50%
+        - width: fill
+        - height: auto
+- TimerWidget, BreakWidget
+    - expanded
+        - stack V
+        - bg: on-primary
+        - radius: widget-radius
+        - width: fill
+        - height: fill
+        - padding: 0px
+        - gap: 0px
+        - Header
+        - CounterFrame
+            - Counter.active or Counter.pause
+            - Chart.active or Chart.pause
+            - CounterFrame.height: fill
+            - CounterFrame.width: fill
+        - StateButton
+    - collapsed
+        - stack H
+        - bg: on-primary
+        - radius: widget-radius
+        - width: fill
+        - height: auto
+        - padding: 0px
+        - gap: 0px
+        - Header
+        - CounterFrame
+            - Counter.inactive
+            - Chart.inactive
+            - top and bottom height: 24px
+            - width: fill
+        - StateButton
+- HeaderFrame
+    - width: fill
+    - top and bottom height: 24px
+    - text allign: center
+    - text width: fill
+    - text styel: default
+- Counter
+    - accent
+        - text style: timer
+        - color: text
+        - allign: center
+    - inactive
+        - text style: default
+        - color: text
+        - allign: center
+    - muted
+        - text style: timer
+        - color: text 70%
+        - allign: center
+- Chart
+    - active
+        - size: size-active
+        - shadow: shadow_active
+        - bar-primary
+            - chart-timer-bar-primary
+            - chart-break-bar-primary
+        - bar-secondary
+            - chart-timer-bar-secondary
+            - chart-break-bar-secondary
+        - bar-secondary-stroke
+            - chart-timer-bar-secondary-stroke
+            - chart-break-bar-secondary-stroke
+        - locked aspect ratio
+        - position absolute, in frame center
+    - paused
+        - size: size-active
+        - shadow: shadow_inactive
+    - inactive
+        - size: size-inactive
+        - shadow: shadow_inactive
+        - chart frame opacity: 0%
+        - bar design the same as in active state
+- StateButton
+    - accent
+        - text color: text-primary
+        - width: fill
+        - top and bottom height: 24px
+        - text allign: center
+        - text width: fill
+        - text style: default
+    - muted
+        - text color: text-secondary
+        - width: fill
+        - top and bottom height: 24px
+        - text allign: center
+        - text width: fill
+        - text style: default
+- ShortcutsFrame
+    - stack H
+        - gap: gap_between_items
+        - width: fill
+        - height: auto
+- Shortcut:
+    - radius: shortcuts-radius
+    - bg: on-primary
+    - width: fill
+    - top and height bottom: 24px
+    - text style: default

@@ -1,0 +1,11 @@
+# Project File Structure
+- Styles
+- Variables
+- TimerFrame
+- BreakFrame
+- TimerWidget
+- BreakWidget
+- Chart
+- Shortcut
+- Workflow
+- ContentView

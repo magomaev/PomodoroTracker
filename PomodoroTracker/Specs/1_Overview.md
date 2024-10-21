@@ -1,0 +1,7 @@
+# Pomodoro Tracker Specifications Overview
+
+Short Caption about App:
+
+The application is called Pomodoro Tracker. It consists of a single screen without scrolling. The screen features two frames: one for the work timer and the other for the break timer. Each frame contains a component: the first is a timer widget (work or break), and the second is a frame with four shortcut buttons that change the timer duration or add time. The work timer widget and the break timer widget are interconnected. If one timer is active and counting down minutes, the other is in an inactive, collapsed state. I can tap on a shortcut and select a timer from templates, and the timer will start immediately. I can also interact with the timer widget to start, pause, or reset the time. When the timer is counting down, I can tap on a shortcut to add extra time to the active timer. I can swipe up or down on the screen to activate a specific timer widget (this is an additional way to start the timer besides clicking on the timer widget itself, whether it’s for work or a break). If one timer became active and expand, another one becaome inactive and collapse. All transitions between states are accompanied by morphing animations, as the work timer widget in its collapsed and expanded states is the same widget with a reorganization of components during transitions between states.
+
+In other files store styling, components description and what styles they use, components states and how they change states, and workflow of how components change states based on user interactions.

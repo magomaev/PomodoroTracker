@@ -1,0 +1,41 @@
+# Workflow
+- if TimerWidget.off and user tap on TimerWidget
+    - set TimerWidget.active
+    - set BreakWidget.off
+- if TimerWidget.off and user swipe down on the screen
+    - set TimerWidget.active
+    - set BreakWidget.off
+- if BreakWidget.off and user tap on BreakWidget
+    - set BreakWidget.active
+    - set TimerWidget.off
+- if BreakWidget.off and user swipe up on the screen
+    - set BreakWidget.active
+    - set TimerWidget.off
+- if TimerWidget.inactive and user tap on TimerWidget.CounterFrame or TimerWidget.StateButton.start
+    - set TimerWidget.active
+- if TimerWidget.active and user tap on TimerWidget.CounterFrame
+    - set TimerWidget.pause
+- if TimerWidget.active and user tap on TimerWidget.StateButton.stop
+    - set TimerWidget.inactive
+- if TimerWidget.pause and user tap on TimerWidget.StateButton.resume
+    - set TimerWidget.active
+- if TimerWidget.inactive and user tap on TimerFrame.ShortcutsFrame.shortcut
+    - set TimerWidget.active
+    - set timer counter value from timer-counters-shortcuts.variable
+- if TimerWidget.active or TimerWidget.pause and user tap on TimerFrame.ShortcutsFrame.shortcut
+    - set TimerWidget.active
+    - add to timer counter value extra time from timer-extra-counters-shortcuts.variable
+- if BreakWidget.inactive and user tap on BreakWidget.CounterFrame or BreakWidget.StateButton.start
+    - set BreakWidget.active
+- if BreakWidget.active and user tap on BreakWidget.CounterFrame
+    - set BreakWidget.pause
+- if BreakWidget.active and user tap on BreakWidget.StateButton.stop
+    - set BreakWidget.inactive
+- if BreakWidget.pause and user tap on BreakWidget.StateButton.resume
+    - set BreakWidget.active
+- if BreakWidget.inactive and user tap on BreakFrame.ShortcutsFrame.shortcut
+    - set BreakWidget.active
+    - set timer counter value from break-counters-shortcuts.variable
+- if BreakWidget.active or BreakWidget.pause and user tap on BreakFrame.ShortcutsFrame.shortcut
+    - set BreakWidget.active
+    - add to timer counter value extra time from break-extra-counters-shortcuts.variable

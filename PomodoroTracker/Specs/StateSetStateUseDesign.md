@@ -1,0 +1,81 @@
+# State, set state, use design
+
+Intro:
+
+- Level 1 – component
+- Level 2 – component state
+- Level 3 – Link what design style to use for component state and when by workflow component set state, this component change states in another components that related to this component and displayd in the bullet list in level 3
+
+- TimerFrame, BreakFrame state
+    - collapsed
+        - use TimerFrame, BreakFrame design collapsed
+    - expanded
+        - use TimerFrame, BreakFrame design expanded
+- TimerWidget, BreakWidget state
+    - off
+        - set chart.inactive
+        - set counter.inactive
+        - set statebutton.start
+        - set shortcut.mode.counter-template
+        - set TimerFrame / BreakFrame collapsed state
+        - use TimerWidget / BreakWidget collapsed design
+    - inactive
+        - set chart.inactive
+        - set counter.ready
+        - set statebutton.start
+        - set shortcut.mode.counter-template
+        - set TimerFrame / BreakFrame expanded state
+        - use TimerWidget / BreakWidget expanded design
+    - active
+        - set chart.active
+        - set counter.active
+        - set statebutton.stop
+        - set shortcut.mode.extra-counter-template
+        - set TimerFrame / BreakFrame expanded state
+        - use TimerWidget / BreakWidget expanded design
+    - pause
+        - set chart.pause
+        - set counter.pause
+        - set statebutton.resume
+        - set shortcut.mode.extra-counter-template
+        - set TimerFrame / BreakFrame expanded state
+        - use TimerWidget / BreakWidget expanded design
+- Shortcut button mode
+    - counter-template mode
+        - this mode rewrite default counter value to the value from shortcut
+        - timer-counters-shortcuts.variable or break-counters-shortcuts.variable
+    - extra-counter-template mode
+        - this mode add extra time to the active counter
+        - timer-extra-counters-shortcuts.variable or break-extra-counters-shortcuts.variable
+    - use Shortcut design
+- StateButton variants
+    - START
+        - use StateButton accent design
+    - STOP
+        - use StateButton muted design
+    - RESUME
+        - use StateButton accent design
+- Chart
+    - active
+        - run chart animation
+        - use Chart.active design
+    - pause
+        - paues chart animation
+        - use Chart.pause design
+    - inactive
+        - stop chart animation
+        - use Chart.inactive design
+- Counter
+    - ready
+        - counting not started, used default value
+        - use Counter.accent design
+    - active
+        - run counting
+        - use Counter.accent design
+    - inactive
+        - stop counting
+            - The counter is reset to default value
+        - use Counter.inactive design
+    - pause
+        - pause counting
+        - use Counter.muted design

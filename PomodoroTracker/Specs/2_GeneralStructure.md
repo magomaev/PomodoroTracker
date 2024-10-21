@@ -1,0 +1,14 @@
+# General Structure
+- On the screen, there are two frames:
+    - first frame "WorkTimer"
+    - second frame "BreakTimer"
+- WorkTimer and BreakTimer contains two frames:
+    - Primary frame is "WidgetFrame" and contains 3 frames:
+        - Header
+            - text
+        - CounterFrame
+            - counting digits
+            - circle chart
+        - StateButton
+            - text
+    - Secondary frame contains 4 shortcut buttons, frame name is "ShortcutsFrame"

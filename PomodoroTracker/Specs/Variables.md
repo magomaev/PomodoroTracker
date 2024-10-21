@@ -1,0 +1,26 @@
+# Variables
+- counters-period-format: minutes
+- timer-counter_default
+    - 30
+- break-counter_default
+    - 5
+- timer-counters-shortcuts
+    - 10
+    - 15
+    - 45
+    - 60
+- break-counters-shortcuts
+    - 10
+    - 15
+    - 20
+    - 30
+- timer-extra-counters-shortcuts
+    - +5
+    - +10
+    - +15
+    - +30
+- break-extra-counters-shortcuts
+    - +5
+    - +10
+    - +15
+    - +30
