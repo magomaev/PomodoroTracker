@@ -22,6 +22,7 @@
 		9234DD052CC6563E00C3EF2B /* TimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DCFC2CC6563E00C3EF2B /* TimerWidget.swift */; };
 		9234DD062CC6563E00C3EF2B /* BreakFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DCFD2CC6563E00C3EF2B /* BreakFrame.swift */; };
 		9234DD082CC65B4A00C3EF2B /* PomodoroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DD072CC65B4A00C3EF2B /* PomodoroTrackerApp.swift */; };
+		9234DD0A2CC6830600C3EF2B /* CounterStateControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DD092CC6830500C3EF2B /* CounterStateControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		9234DCFC2CC6563E00C3EF2B /* TimerWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerWidget.swift; sourceTree = "<group>"; };
 		9234DCFD2CC6563E00C3EF2B /* BreakFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreakFrame.swift; sourceTree = "<group>"; };
 		9234DD072CC65B4A00C3EF2B /* PomodoroTrackerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PomodoroTrackerApp.swift; sourceTree = "<group>"; };
+		9234DD092CC6830500C3EF2B /* CounterStateControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterStateControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		921F22962CC442420052E2AB /* PomodoroTracker */ = {
 			isa = PBXGroup;
 			children = (
+				9234DD092CC6830500C3EF2B /* CounterStateControl.swift */,
 				9234DD072CC65B4A00C3EF2B /* PomodoroTrackerApp.swift */,
 				9234DCFD2CC6563E00C3EF2B /* BreakFrame.swift */,
 				9234DCF62CC6563E00C3EF2B /* Chart.swift */,
@@ -287,6 +290,7 @@
 				9234DCFF2CC6563E00C3EF2B /* Chart.swift in Sources */,
 				9234DD052CC6563E00C3EF2B /* TimerWidget.swift in Sources */,
 				9234DD042CC6563E00C3EF2B /* Styles.swift in Sources */,
+				9234DD0A2CC6830600C3EF2B /* CounterStateControl.swift in Sources */,
 				9234DCFE2CC6563E00C3EF2B /* Workflow.swift in Sources */,
 				9234DD032CC6563E00C3EF2B /* ContentView.swift in Sources */,
 				9234DD002CC6563E00C3EF2B /* Shortcut.swift in Sources */,

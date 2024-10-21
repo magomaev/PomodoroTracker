@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TimerWidget: View {
     @State private var remainingTime = 30
+    @State private var buttonState: ButtonState = .stop
     let theme: AppTheme
     
     var body: some View {
@@ -28,14 +29,16 @@ struct TimerWidget: View {
                     .foregroundColor(theme.textPrimary)
             }
             
-            Button(action: {
+            CounterStateControl(theme: theme, state: buttonState) {
                 // Action will be implemented later
-            }) {
-                Text("STOP")
-                    .font(AppStyles.Typography.defaultStyle)
-                    .foregroundColor(theme.textPrimary)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 60)
+                switch buttonState {
+                case .stop:
+                    buttonState = .pause
+                case .pause:
+                    buttonState = .resume
+                case .resume:
+                    buttonState = .stop
+                }
             }
         }
         .padding(20)
