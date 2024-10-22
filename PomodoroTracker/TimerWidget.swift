@@ -24,15 +24,19 @@ enum TimerWidgetState {
 }
 
 class TimerWidget: ObservableObject {
-    @Published private(set) var remainingTime = 1500 // 25 minutes in seconds
+    private let defaultTime: Double = 1500 // 25 minutes in seconds
+    
+    @Published private(set) var remainingTime: Int
     @Published private(set) var timerState: TimerWidgetState = .inactive
+    @Published private(set) var currentSelectedTime: Double
     let theme: AppTheme
     
-    let totalTime: Double = 1500
     let shortcuts = [5, 10, 15, 25] // in minutes
     
     init(theme: AppTheme) {
         self.theme = theme
+        self.remainingTime = Int(defaultTime)
+        self.currentSelectedTime = defaultTime
     }
     
     func handleCounterTap() {
@@ -52,17 +56,21 @@ class TimerWidget: ObservableObject {
             timerState = .active
         case .active:
             timerState = .inactive
-            remainingTime = Int(totalTime)
+            remainingTime = Int(defaultTime)
+            currentSelectedTime = defaultTime
         }
     }
     
     func handleShortcutTap(_ value: Int) {
+        let newTime = value * 60
         switch timerState {
         case .inactive:
-            remainingTime = value * 60
+            remainingTime = newTime
+            currentSelectedTime = Double(newTime)
             timerState = .active
         case .pause, .active:
-            remainingTime += value * 60
+            remainingTime += newTime
+            currentSelectedTime += Double(newTime)
         }
     }
     
@@ -72,14 +80,13 @@ class TimerWidget: ObservableObject {
             remainingTime -= 1
         } else {
             timerState = .inactive
-            remainingTime = Int(totalTime)
+            remainingTime = Int(currentSelectedTime)
         }
     }
     
     func timeString(from seconds: Int) -> String {
-        let minutes = seconds / 60
-        let remainingSeconds = seconds % 60
-        return String(format: "%d:%02d", minutes, remainingSeconds)
+        let minutes = Int(ceil(Double(seconds) / 60.0))
+        return String(format: "%d", minutes)
     }
 }
 
@@ -98,7 +105,8 @@ struct TimerWidgetView: View {
                 GeometryReader { geometry in
                     ZStack {
                         Chart(
-                            progress: (timerWidget.totalTime - Double(timerWidget.remainingTime)) / timerWidget.totalTime,
+                            totalTime: timerWidget.currentSelectedTime,
+                            remainingTime: Double(timerWidget.remainingTime),
                             size: geometry.size,
                             backgroundColor: timerWidget.theme.onPrimary,
                             foregroundColor: timerWidget.theme.chartTimerBarPrimary

@@ -5,13 +5,15 @@ struct ContentView: View {
     @StateObject private var timerWidget = TimerWidget(theme: AppStyles.creamyTheme)
     
     var body: some View {
-        VStack(spacing: AppStyles.Layout.gapBetweenContainers) {
-            TimerWidgetView(timerWidget: timerWidget)
-            BreakFrame(theme: currentTheme)
+        ZStack {
+            currentTheme.primary.ignoresSafeArea()
+            
+            VStack(spacing: AppStyles.Layout.gapBetweenContainers) {
+                TimerWidgetView(timerWidget: timerWidget)
+                BreakFrame(theme: currentTheme)
+            }
+            .padding()
         }
-        .padding()
-        .background(currentTheme.primary)
-        .ignoresSafeArea()
     }
 }
 
