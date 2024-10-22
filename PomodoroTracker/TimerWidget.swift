@@ -95,42 +95,51 @@ struct TimerWidgetView: View {
     
     var body: some View {
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            VStack() {
+            VStack {
                 Text("TIMER")
                     .font(AppStyles.Typography.defaultStyle)
                     .foregroundColor(timerWidget.theme.textPrimary)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 60)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .frame(height: 80)
+                    .background(Color.red.opacity(0.3)) // Added red background for visual debugging
                 
                 GeometryReader { geometry in
-                    ZStack {
-                        Chart(
-                            totalTime: timerWidget.currentSelectedTime,
-                            remainingTime: Double(timerWidget.remainingTime),
-                            size: geometry.size,
-                            backgroundColor: timerWidget.theme.onPrimary,
-                            foregroundColor: timerWidget.theme.chartTimerBarPrimary
-                        )
-                        
-                        Text(timerWidget.timeString(from: timerWidget.remainingTime))
-                            .font(AppStyles.Typography.timerStyle)
-                            .foregroundColor(timerWidget.theme.textPrimary)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                timerWidget.handleCounterTap()
-                            }
+                    VStack {
+                        ZStack {
+                            Chart(
+                                totalTime: timerWidget.currentSelectedTime,
+                                remainingTime: Double(timerWidget.remainingTime),
+                                size: CGSize(width: min(geometry.size.width, geometry.size.height), height: min(geometry.size.width, geometry.size.height)),
+                                backgroundColor: timerWidget.theme.onPrimary,
+                                foregroundColor: timerWidget.theme.chartTimerBarPrimary
+                            )
+                            
+                            Text(timerWidget.timeString(from: timerWidget.remainingTime))
+                                .font(AppStyles.Typography.timerStyle)
+                                .foregroundColor(timerWidget.theme.textPrimary)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    timerWidget.handleCounterTap()
+                                }
+                        }
+                        .frame(width: min(geometry.size.width, geometry.size.height), height: min(geometry.size.width, geometry.size.height))
+                        .background(Color.red.opacity(0.3)) // Added red background for visual debugging
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.red.opacity(0.3)) // Added red background for visual debugging
                 }
-                .aspectRatio(1, contentMode: .fit)
                 
                 CounterStateControl(theme: timerWidget.theme, state: timerWidget.timerState.buttonState) {
                     timerWidget.handleButtonTap()
                 }
+                .background(Color.red.opacity(0.3)) // Added red background for visual debugging
             }
+            .frame(maxHeight: .infinity)
             .padding()
             .background(timerWidget.theme.onPrimary)
             .cornerRadius(AppStyles.Layout.defaultCornerRadius)
+            .background(Color.red.opacity(0.3)) // Added red background for visual debugging
             
             ShortcutButtonsView(
                 shortcuts: timerWidget.shortcuts,
@@ -139,6 +148,7 @@ struct TimerWidgetView: View {
                 action: timerWidget.handleShortcutTap
             )
         }
+        .frame(maxHeight: .infinity)
         .padding(AppStyles.Layout.gapBetweenItems)
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
             timerWidget.updateTimer()

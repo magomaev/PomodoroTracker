@@ -10,7 +10,7 @@ struct ContentView: View {
             
             VStack(spacing: AppStyles.Layout.gapBetweenContainers) {
                 TimerWidgetView(timerWidget: timerWidget)
-                BreakFrame(theme: currentTheme)
+            /*     BreakFrame(theme: currentTheme) */
             }
             .padding()
         }
