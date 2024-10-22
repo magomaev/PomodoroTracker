@@ -18,7 +18,7 @@
 		9234DD022CC6563E00C3EF2B /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DCF92CC6563E00C3EF2B /* Variables.swift */; };
 		9234DD032CC6563E00C3EF2B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DCFA2CC6563E00C3EF2B /* ContentView.swift */; };
 		9234DD042CC6563E00C3EF2B /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DCFB2CC6563E00C3EF2B /* Styles.swift */; };
-		9234DD052CC6563E00C3EF2B /* TimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DCFC2CC6563E00C3EF2B /* TimerWidget.swift */; };
+		9234DD052CC6563E00C3EF2B /* TimerWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DCFC2CC6563E00C3EF2B /* TimerWork.swift */; };
 		9234DD082CC65B4A00C3EF2B /* PomodoroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DD072CC65B4A00C3EF2B /* PomodoroTrackerApp.swift */; };
 		9234DD0A2CC6830600C3EF2B /* CounterStateControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DD092CC6830500C3EF2B /* CounterStateControl.swift */; };
 /* End PBXBuildFile section */
@@ -56,7 +56,7 @@
 		9234DCF92CC6563E00C3EF2B /* Variables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		9234DCFA2CC6563E00C3EF2B /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9234DCFB2CC6563E00C3EF2B /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
-		9234DCFC2CC6563E00C3EF2B /* TimerWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerWidget.swift; sourceTree = "<group>"; };
+		9234DCFC2CC6563E00C3EF2B /* TimerWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerWork.swift; sourceTree = "<group>"; };
 		9234DD072CC65B4A00C3EF2B /* PomodoroTrackerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PomodoroTrackerApp.swift; sourceTree = "<group>"; };
 		9234DD092CC6830500C3EF2B /* CounterStateControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterStateControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,7 +115,7 @@
 				9234DCFA2CC6563E00C3EF2B /* ContentView.swift */,
 				9234DCF72CC6563E00C3EF2B /* Shortcut.swift */,
 				9234DCFB2CC6563E00C3EF2B /* Styles.swift */,
-				9234DCFC2CC6563E00C3EF2B /* TimerWidget.swift */,
+				9234DCFC2CC6563E00C3EF2B /* TimerWork.swift */,
 				9234DCF92CC6563E00C3EF2B /* Variables.swift */,
 				9234DCF52CC6563E00C3EF2B /* Workflow.swift */,
 				921F229D2CC442440052E2AB /* Assets.xcassets */,
@@ -282,7 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9234DCFF2CC6563E00C3EF2B /* Chart.swift in Sources */,
-				9234DD052CC6563E00C3EF2B /* TimerWidget.swift in Sources */,
+				9234DD052CC6563E00C3EF2B /* TimerWork.swift in Sources */,
 				9234DD042CC6563E00C3EF2B /* Styles.swift in Sources */,
 				9234DD0A2CC6830600C3EF2B /* CounterStateControl.swift in Sources */,
 				9234DCFE2CC6563E00C3EF2B /* Workflow.swift in Sources */,

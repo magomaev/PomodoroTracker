@@ -11,35 +11,35 @@ Intro:
         - use TimerFrame, BreakFrame design collapsed
     - expanded
         - use TimerFrame, BreakFrame design expanded
-- TimerWidget, BreakWidget state
+- TimerWork, BreakWidget state
     - off
         - set chart.inactive
         - set counter.inactive
         - set statebutton.start
         - set shortcut.mode.counter-template
         - set TimerFrame / BreakFrame collapsed state
-        - use TimerWidget / BreakWidget collapsed design
+        - use TimerWork / BreakWidget collapsed design
     - inactive
         - set chart.inactive
         - set counter.ready
         - set statebutton.start
         - set shortcut.mode.counter-template
         - set TimerFrame / BreakFrame expanded state
-        - use TimerWidget / BreakWidget expanded design
+        - use TimerWork / BreakWidget expanded design
     - active
         - set chart.active
         - set counter.active
         - set statebutton.stop
         - set shortcut.mode.extra-counter-template
         - set TimerFrame / BreakFrame expanded state
-        - use TimerWidget / BreakWidget expanded design
+        - use TimerWork / BreakWidget expanded design
     - pause
         - set chart.pause
         - set counter.pause
         - set statebutton.resume
         - set shortcut.mode.extra-counter-template
         - set TimerFrame / BreakFrame expanded state
-        - use TimerWidget / BreakWidget expanded design
+        - use TimerWork / BreakWidget expanded design
 - Shortcut button mode
     - counter-template mode
         - this mode rewrite default counter value to the value from shortcut

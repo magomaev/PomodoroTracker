@@ -31,7 +31,7 @@ Designs:
         - Frame opacity: 50%
         - width: fill
         - height: auto
-- TimerWidget, BreakWidget
+- TimerWork, BreakWidget
     - expanded
         - stack V
         - bg: on-primary

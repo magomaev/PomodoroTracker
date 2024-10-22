@@ -2,14 +2,14 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentTheme: AppTheme = AppStyles.creamyTheme
-    @StateObject private var timerWidget = TimerWidget(theme: AppStyles.creamyTheme)
+    @StateObject private var timerWork = TimerWork(theme: AppStyles.creamyTheme)
     
     var body: some View {
         ZStack {
             currentTheme.primary.ignoresSafeArea()
             
             VStack(spacing: AppStyles.Layout.gapBetweenContainers) {
-                TimerWidgetView(timerWidget: timerWidget)
+                TimerWorkView(timerWork: timerWork)
             /*     BreakFrame(theme: currentTheme) */
             }
             .padding()

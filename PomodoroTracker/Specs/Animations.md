@@ -1,11 +1,11 @@
 # Animations
-- TimerWidget and BreakWidget has two design states: collapsed and expanded. These states represent different layouts within the same component, but they share a common identity.
+- TimerWork and BreakWidget has two design states: collapsed and expanded. These states represent different layouts within the same component, but they share a common identity.
     - Collapsed State:** The widget has a smaller frame with fewer items visible.
     - Expanded State: The widget grows in size, revealing more items and rearranging the content inside the frame.
     - When transitioning between the collapsed and expanded states, I need the change to happen smoothly, as if the widget is morphing from one state to another. The morphing animation should visually connect the two states, emphasizing that this is the same component that is simply changing its appearance (frame size) and content order.
     - The reordering of items inside the frame should also be animated to visually indicate that the elements are rearranging as the frame changes size.
     - Add more specific details about animation and reordering: speed, easing functions, and other specific transitions between items.
-- Chart animations between states must be also like described in TimerWidget and BreakWidget animations
+- Chart animations between states must be also like described in TimerWork and BreakWidget animations
 - Chart progress state
     - chart progress must be smooth flat down
 - StateButton tap
@@ -14,5 +14,5 @@
     - opacity 80%
 - CounterFrame tap
     - counter opacity 80%
-- TimerWidget.state.off, BreakWidget.state.off tap
-    - TimerWidget, BreakWidget opacity 80%
+- TimerWork.state.off, BreakWidget.state.off tap
+    - TimerWork, BreakWidget opacity 80%

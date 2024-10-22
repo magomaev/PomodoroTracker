@@ -3,7 +3,7 @@
 - Variables
 - TimerFrame
 - BreakFrame
-- TimerWidget
+- TimerWork
 - BreakWidget
 - Chart
 - Shortcut

@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum TimerWidgetState {
+enum TimerWorkState {
     case inactive
     case pause
     case active
@@ -23,11 +23,11 @@ enum TimerWidgetState {
     }
 }
 
-class TimerWidget: ObservableObject {
+class TimerWork: ObservableObject {
     private let defaultTime: Double = 1500 // 25 minutes in seconds
     
     @Published private(set) var remainingTime: Int
-    @Published private(set) var timerState: TimerWidgetState = .inactive
+    @Published private(set) var timerState: TimerWorkState = .inactive
     @Published private(set) var currentSelectedTime: Double
     let theme: AppTheme
     
@@ -90,15 +90,15 @@ class TimerWidget: ObservableObject {
     }
 }
 
-struct TimerWidgetView: View {
-    @ObservedObject var timerWidget: TimerWidget
+struct TimerWorkView: View {
+    @ObservedObject var timerWork: TimerWork
     
     var body: some View {
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
             VStack {
                 Text("TIMER")
                     .font(AppStyles.Typography.defaultStyle)
-                    .foregroundColor(timerWidget.theme.textPrimary)
+                    .foregroundColor(timerWork.theme.textPrimary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .frame(height: 60)
                 
@@ -110,20 +110,20 @@ struct TimerWidgetView: View {
                         
                         ZStack {
                             Chart(
-                                totalTime: timerWidget.currentSelectedTime,
-                                remainingTime: Double(timerWidget.remainingTime),
+                                totalTime: timerWork.currentSelectedTime,
+                                remainingTime: Double(timerWork.remainingTime),
                                 size: CGSize(width: chartSize, height: chartSize),
-                                backgroundColor: timerWidget.theme.onPrimary,
-                                foregroundColor: timerWidget.theme.chartTimerBarPrimary
+                                backgroundColor: timerWork.theme.onPrimary,
+                                foregroundColor: timerWork.theme.chartTimerBarPrimary
                             )
                             
-                            Text(timerWidget.timeString(from: timerWidget.remainingTime))
+                            Text(timerWork.timeString(from: timerWork.remainingTime))
                                 .font(AppStyles.Typography.timerStyle)
-                                .foregroundColor(timerWidget.theme.textPrimary)
+                                .foregroundColor(timerWork.theme.textPrimary)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    timerWidget.handleCounterTap()
+                                    timerWork.handleCounterTap()
                                 }
                         }
                         .frame(width: chartSize, height: chartSize)
@@ -131,26 +131,26 @@ struct TimerWidgetView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 
-                CounterStateControl(theme: timerWidget.theme, state: timerWidget.timerState.buttonState) {
-                    timerWidget.handleButtonTap()
+                CounterStateControl(theme: timerWork.theme, state: timerWork.timerState.buttonState) {
+                    timerWork.handleButtonTap()
                 }
             }
             .frame(maxHeight: .infinity)
             .padding()
-            .background(timerWidget.theme.onPrimary)
+            .background(timerWork.theme.onPrimary)
             .cornerRadius(AppStyles.Layout.defaultCornerRadius)
             
             ShortcutButtonsView(
-                shortcuts: timerWidget.shortcuts,
-                theme: timerWidget.theme,
-                mode: timerWidget.timerState.shortcutMode,
-                action: timerWidget.handleShortcutTap
+                shortcuts: timerWork.shortcuts,
+                theme: timerWork.theme,
+                mode: timerWork.timerState.shortcutMode,
+                action: timerWork.handleShortcutTap
             )
         }
         .frame(maxHeight: .infinity)
         .padding(AppStyles.Layout.gapBetweenItems)
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
-            timerWidget.updateTimer()
+            timerWork.updateTimer()
         }
     }
 }
