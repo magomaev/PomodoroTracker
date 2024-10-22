@@ -18,7 +18,7 @@ struct CounterStateControl: View {
                 .font(AppStyles.Typography.defaultStyle)
                 .foregroundColor(theme.textPrimary)
                 .frame(maxWidth: .infinity, alignment: .center)
-                .frame(height: 80)
+                .frame(height: 46)
         }
     }
 }

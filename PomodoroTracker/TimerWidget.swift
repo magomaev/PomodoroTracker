@@ -100,16 +100,19 @@ struct TimerWidgetView: View {
                     .font(AppStyles.Typography.defaultStyle)
                     .foregroundColor(timerWidget.theme.textPrimary)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .frame(height: 80)
-                    .background(Color.red.opacity(0.3)) // Added red background for visual debugging
+                    .frame(height: 60)
                 
                 GeometryReader { geometry in
                     VStack {
+                        // Calculate the new size with margin
+                        let availableSize = min(geometry.size.width, geometry.size.height)
+                        let chartSize = availableSize - 24 // 12px margin on each side
+                        
                         ZStack {
                             Chart(
                                 totalTime: timerWidget.currentSelectedTime,
                                 remainingTime: Double(timerWidget.remainingTime),
-                                size: CGSize(width: min(geometry.size.width, geometry.size.height), height: min(geometry.size.width, geometry.size.height)),
+                                size: CGSize(width: chartSize, height: chartSize),
                                 backgroundColor: timerWidget.theme.onPrimary,
                                 foregroundColor: timerWidget.theme.chartTimerBarPrimary
                             )
@@ -123,23 +126,19 @@ struct TimerWidgetView: View {
                                     timerWidget.handleCounterTap()
                                 }
                         }
-                        .frame(width: min(geometry.size.width, geometry.size.height), height: min(geometry.size.width, geometry.size.height))
-                        .background(Color.red.opacity(0.3)) // Added red background for visual debugging
+                        .frame(width: chartSize, height: chartSize)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.red.opacity(0.3)) // Added red background for visual debugging
                 }
                 
                 CounterStateControl(theme: timerWidget.theme, state: timerWidget.timerState.buttonState) {
                     timerWidget.handleButtonTap()
                 }
-                .background(Color.red.opacity(0.3)) // Added red background for visual debugging
             }
             .frame(maxHeight: .infinity)
             .padding()
             .background(timerWidget.theme.onPrimary)
             .cornerRadius(AppStyles.Layout.defaultCornerRadius)
-            .background(Color.red.opacity(0.3)) // Added red background for visual debugging
             
             ShortcutButtonsView(
                 shortcuts: timerWidget.shortcuts,
