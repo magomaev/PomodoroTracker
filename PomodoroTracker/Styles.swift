@@ -66,7 +66,6 @@ struct AppStyles {
     struct Layout {
         static let defaultCornerRadius: CGFloat = 32
         static let chartBarCornerRadius: CGFloat = 0
-        static let gapBetweenContainers: CGFloat = 40
         static let gapBetweenItems: CGFloat = 4
         static let chartSizeActive: CGSize = CGSize(width: 260, height: 260)
         static let chartSizeInactive: CGSize = CGSize(width: 250, height: 250)

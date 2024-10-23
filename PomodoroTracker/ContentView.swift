@@ -9,7 +9,7 @@ struct ContentView: View {
         ZStack {
             currentTheme.primary.ignoresSafeArea()
             
-            VStack(spacing: AppStyles.Layout.gapBetweenContainers) {
+            VStack(spacing: 60) {
                 TimerWorkView(timerWork: timerWork)
                 TimerBreakView(timerBreak: timerBreak)
             }

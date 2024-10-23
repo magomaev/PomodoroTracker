@@ -127,11 +127,16 @@ struct TimerWorkView: View {
     
     var body: some View {
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            if timerWork.timerState == .off {
-                offStateView
-            } else {
-                activeStateView
+            VStack {  // Container for timer content
+                if timerWork.timerState == .off {
+                    offStateView
+                } else {
+                    activeStateView
+                        .frame(maxHeight: .infinity) // Only fill height when active
+                }
             }
+            .background(timerWork.theme.onPrimary)
+            .cornerRadius(AppStyles.Layout.defaultCornerRadius)
             
             ShortcutButtonsView(
                 shortcuts: timerWork.timerState == .ready || timerWork.timerState == .off ? timerWork.countersTemplates : timerWork.extraCountersTemplates,
@@ -139,14 +144,9 @@ struct TimerWorkView: View {
                 mode: timerWork.timerState.shortcutMode,
                 action: timerWork.handleShortcutTap
             )
-            
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(timerWork.theme.primary)
-        .edgesIgnoringSafeArea(.all)
-        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
-            timerWork.updateTimer()
-        }
+        // .background(Color.red.opacity(0.2)) // Debug BG
+        .frame(maxWidth: .infinity)
     }
     
     private var offStateView: some View {
@@ -220,9 +220,9 @@ struct TimerWorkView: View {
                 timerWork.handleButtonTap()
             }
         }
+        // .background(Color.red.opacity(0.2)) // Debug BG // Debug background
         .frame(maxHeight: .infinity)
         .padding()
-        .background(timerWork.theme.onPrimary)
         .cornerRadius(AppStyles.Layout.defaultCornerRadius)
     }
 }

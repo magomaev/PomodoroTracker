@@ -129,11 +129,16 @@ struct TimerBreakView: View {
     
     var body: some View {
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            if timerBreak.timerState == .off {
-                offStateView
-            } else {
-                activeStateView
+            VStack {  // Container for timer content
+                if timerBreak.timerState == .off {
+                    offStateView
+                } else {
+                    activeStateView
+                        .frame(maxHeight: .infinity) // Only fill height when active
+                }
             }
+            .background(timerBreak.theme.onPrimary)
+            .cornerRadius(AppStyles.Layout.defaultCornerRadius)
             
             ShortcutButtonsView(
                 shortcuts: timerBreak.timerState == .ready || timerBreak.timerState == .off ? timerBreak.countersTemplates : timerBreak.extraCountersTemplates,
@@ -141,12 +146,9 @@ struct TimerBreakView: View {
                 mode: timerBreak.timerState.shortcutMode,
                 action: timerBreak.handleShortcutTap
             )
-            
-            // Temporary button to toggle off state
-
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(timerBreak.theme.primary)
+        // .background(Color.red.opacity(0.2)) // Debug BG
+        .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea(.all)
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
             timerBreak.updateTimer()
@@ -180,9 +182,8 @@ struct TimerBreakView: View {
                 timerBreak.handleButtonTap()
             }
         }
-        .frame(height: 60)
+        .frame(height: 50)
         .padding()
-        .background(timerBreak.theme.onPrimary)
         .cornerRadius(AppStyles.Layout.defaultCornerRadius)
     }
     
@@ -226,9 +227,9 @@ struct TimerBreakView: View {
                 timerBreak.handleButtonTap()
             }
         }
+        // .background(Color.red.opacity(0.2)) // Debug BG // Debug background
         .frame(maxHeight: .infinity)
         .padding()
-        .background(timerBreak.theme.onPrimary)
         .cornerRadius(AppStyles.Layout.defaultCornerRadius)
     }
 }
