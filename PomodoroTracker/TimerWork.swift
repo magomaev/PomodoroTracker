@@ -4,18 +4,20 @@ enum TimerWorkState {
     case ready
     case pause
     case active
+    case off
     
     var buttonState: ButtonState {
         switch self {
         case .ready: return .start
         case .pause: return .resume
         case .active: return .stop
+        case .off: return .start
         }
     }
     
     var shortcutMode: ShortcutMode {
         switch self {
-        case .ready:
+        case .ready, .off:
             return .counter
         case .pause, .active:
             return .extraCounter
@@ -27,7 +29,7 @@ class TimerWork: ObservableObject {
     private let defaultTime: Double = 1500 // 25 minutes in seconds
     
     @Published private(set) var remainingTime: Int
-    @Published private(set) var timerState: TimerWorkState = .ready
+    @Published private(set) var timerState: TimerWorkState = .off
     @Published private(set) var currentSelectedTime: Double
     let theme: AppTheme
     
@@ -46,6 +48,8 @@ class TimerWork: ObservableObject {
             timerState = .pause
         case .pause, .ready:
             timerState = .active
+        case .off:
+            timerState = .ready
         }
     }
     
@@ -59,13 +63,15 @@ class TimerWork: ObservableObject {
             timerState = .ready
             remainingTime = Int(defaultTime)
             currentSelectedTime = defaultTime
+        case .off:
+            timerState = .ready
         }
     }
     
     func handleShortcutTap(_ value: Int) {
         let newTime = value * 60
         switch timerState {
-        case .ready:
+        case .ready, .off:
             remainingTime = newTime
             currentSelectedTime = Double(newTime)
             timerState = .active
@@ -89,6 +95,15 @@ class TimerWork: ObservableObject {
         let minutes = Int(ceil(Double(seconds) / 60.0))
         return String(format: "%d", minutes)
     }
+    
+    func toggleOffState() {
+        if timerState == .off {
+            timerState = .ready
+        } else {
+            timerState = .off
+            remainingTime = Int(currentSelectedTime)
+        }
+    }
 }
 
 struct TimerWorkView: View {
@@ -96,62 +111,111 @@ struct TimerWorkView: View {
     
     var body: some View {
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            VStack {
+            if timerWork.timerState == .off {
+                offStateView
+            } else {
+                activeStateView
+            }
+            
+            ShortcutButtonsView(
+                shortcuts: timerWork.timerState == .ready || timerWork.timerState == .off ? timerWork.countersTemplates : timerWork.extraCountersTemplates,
+                theme: timerWork.theme,
+                mode: timerWork.timerState.shortcutMode,
+                action: timerWork.handleShortcutTap
+            )
+            
+            Button(action: {
+                timerWork.toggleOffState()
+            }) {
+                Text(timerWork.timerState == .off ? "Turn On" : "Turn Off")
+                    .padding()
+                    .background(timerWork.theme.primary)
+                    .foregroundColor(timerWork.theme.textPrimary)
+                    .cornerRadius(AppStyles.Layout.defaultCornerRadius)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(timerWork.theme.primary)
+        .edgesIgnoringSafeArea(.all)
+        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
+            timerWork.updateTimer()
+        }
+    }
+    
+    private var offStateView: some View {
+        HStack {
+            HStack {
                 Text("TIMER")
                     .font(AppStyles.Typography.defaultStyle)
                     .foregroundColor(timerWork.theme.textPrimary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .frame(height: 60)
                 
-                GeometryReader { geometry in
-                    VStack {
-                        // Calculate the new size with margin
-                        let availableSize = min(geometry.size.width, geometry.size.height)
-                        let chartSize = availableSize - 24 // 12px margin on each side
-                        
-                        ZStack {
-                            Chart(
-                                totalTime: timerWork.currentSelectedTime,
-                                remainingTime: Double(timerWork.remainingTime),
-                                size: CGSize(width: chartSize, height: chartSize),
-                                backgroundColor: timerWork.theme.onPrimary,
-                                foregroundColor: timerWork.theme.chartTimerBarPrimary
-                            )
-                            
-                            Text(timerWork.timeString(from: timerWork.remainingTime))
-                                .font(AppStyles.Typography.timerStyle)
-                                .foregroundColor(timerWork.theme.textPrimary)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    timerWork.handleCounterTap()
-                                }
-                        }
-                        .frame(width: chartSize, height: chartSize)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
+                Text(timerWork.timeString(from: timerWork.remainingTime))
+                    .font(AppStyles.Typography.defaultStyle)
+                    .foregroundColor(timerWork.theme.textPrimary)
+                    .frame(height: 200)
                 
                 CounterStateControl(theme: timerWork.theme, state: timerWork.timerState.buttonState) {
+                    timerWork.toggleOffState()
                     timerWork.handleButtonTap()
                 }
             }
-            .frame(maxHeight: .infinity)
-            .padding()
-            .background(timerWork.theme.onPrimary)
-            .cornerRadius(AppStyles.Layout.defaultCornerRadius)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                timerWork.toggleOffState()
+                timerWork.handleButtonTap()
+            }
+        }
+        .frame(height: 60)
+        .padding()
+        .background(timerWork.theme.onPrimary)
+        .cornerRadius(AppStyles.Layout.defaultCornerRadius)
+    }
+    
+    private var activeStateView: some View {
+        VStack {
+            Text("TIMER")
+                .font(AppStyles.Typography.defaultStyle)
+                .foregroundColor(timerWork.theme.textPrimary)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .frame(height: 60)
             
-            ShortcutButtonsView(
-                shortcuts: timerWork.timerState == .ready ? timerWork.countersTemplates : timerWork.extraCountersTemplates,
-                theme: timerWork.theme,
-                mode: timerWork.timerState.shortcutMode,
-                action: timerWork.handleShortcutTap
-            )
+            GeometryReader { geometry in
+                VStack {
+                    let availableSize = min(geometry.size.width, geometry.size.height)
+                    let chartSize = availableSize - 24
+                    
+                    ZStack {
+                        Chart(
+                            totalTime: timerWork.currentSelectedTime,
+                            remainingTime: Double(timerWork.remainingTime),
+                            size: CGSize(width: chartSize, height: chartSize),
+                            backgroundColor: timerWork.theme.onPrimary,
+                            foregroundColor: timerWork.theme.chartTimerBarPrimary
+                        )
+                        
+                        Text(timerWork.timeString(from: timerWork.remainingTime))
+                            .font(AppStyles.Typography.timerStyle)
+                            .foregroundColor(timerWork.theme.textPrimary)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                timerWork.handleCounterTap()
+                            }
+                    }
+                    .frame(width: chartSize, height: chartSize)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            
+            CounterStateControl(theme: timerWork.theme, state: timerWork.timerState.buttonState) {
+                timerWork.handleButtonTap()
+            }
         }
         .frame(maxHeight: .infinity)
-        .padding(AppStyles.Layout.gapBetweenItems)
-        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
-            timerWork.updateTimer()
-        }
+        .padding()
+        .background(timerWork.theme.onPrimary)
+        .cornerRadius(AppStyles.Layout.defaultCornerRadius)
     }
 }

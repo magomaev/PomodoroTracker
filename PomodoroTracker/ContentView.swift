@@ -10,8 +10,8 @@ struct ContentView: View {
             currentTheme.primary.ignoresSafeArea()
             
             VStack(spacing: AppStyles.Layout.gapBetweenContainers) {
-                // TimerWorkView(timerWork: timerWork)
-                TimerBreakView(timerBreak: timerBreak)
+                TimerWorkView(timerWork: timerWork)
+                // TimerBreakView(timerBreak: timerBreak)
             }
             .padding()
         }
