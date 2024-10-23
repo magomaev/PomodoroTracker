@@ -98,7 +98,12 @@ class TimerBreak: ObservableObject {
     }
     
     func toggleOffState() {
-        timerState = timerState == .off ? .ready : .off
+        if timerState == .off {
+            timerState = .ready
+        } else {
+            timerState = .off
+            remainingTime = Int(currentSelectedTime)  // Reset time when turning off
+        }
     }
 }
 
@@ -141,18 +146,28 @@ struct TimerBreakView: View {
     
     private var offStateView: some View {
         HStack {
-            Text("BREAK")
-                .font(AppStyles.Typography.defaultStyle)
-                .foregroundColor(timerBreak.theme.textPrimary)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .frame(height: 60)
-            
-            Text(timerBreak.timeString(from: timerBreak.remainingTime))
-                .font(AppStyles.Typography.defaultStyle)
-                .foregroundColor(timerBreak.theme.textPrimary)
-                .frame(height: 200)
-            
-            CounterStateControl(theme: timerBreak.theme, state: timerBreak.timerState.buttonState) {
+            // Create a container for the content that can receive taps
+            HStack {
+                Text("BREAK")
+                    .font(AppStyles.Typography.defaultStyle)
+                    .foregroundColor(timerBreak.theme.textPrimary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .frame(height: 60)
+                
+                Text(timerBreak.timeString(from: timerBreak.remainingTime))
+                    .font(AppStyles.Typography.defaultStyle)
+                    .foregroundColor(timerBreak.theme.textPrimary)
+                    .frame(height: 200)
+                
+                CounterStateControl(theme: timerBreak.theme, state: timerBreak.timerState.buttonState) {
+                    // When the button is tapped, we'll do both actions
+                    timerBreak.toggleOffState()
+                    timerBreak.handleButtonTap()
+                }
+            }
+            .contentShape(Rectangle()) // Make the entire HStack tappable
+            .onTapGesture {
+                timerBreak.toggleOffState()
                 timerBreak.handleButtonTap()
             }
         }
