@@ -11,29 +11,29 @@
 - if BreakWidget.off and user swipe up on the screen
     - set BreakWidget.active
     - set TimerWork.off
-- if TimerWork.inactive and user tap on TimerWork.CounterFrame or TimerWork.StateButton.start
+- if TimerWork.ready and user tap on TimerWork.CounterFrame or TimerWork.StateButton.start
     - set TimerWork.active
 - if TimerWork.active and user tap on TimerWork.CounterFrame
     - set TimerWork.pause
 - if TimerWork.active and user tap on TimerWork.StateButton.stop
-    - set TimerWork.inactive
+    - set TimerWork.ready
 - if TimerWork.pause and user tap on TimerWork.StateButton.resume
     - set TimerWork.active
-- if TimerWork.inactive and user tap on TimerFrame.ShortcutsFrame.shortcut
+- if TimerWork.ready and user tap on TimerFrame.ShortcutsFrame.shortcut
     - set TimerWork.active
     - set timer counter value from timer-counters-shortcuts.variable
 - if TimerWork.active or TimerWork.pause and user tap on TimerFrame.ShortcutsFrame.shortcut
     - set TimerWork.active
     - add to timer counter value extra time from timer-extra-counters-shortcuts.variable
-- if BreakWidget.inactive and user tap on BreakWidget.CounterFrame or BreakWidget.StateButton.start
+- if BreakWidget.ready and user tap on BreakWidget.CounterFrame or BreakWidget.StateButton.start
     - set BreakWidget.active
 - if BreakWidget.active and user tap on BreakWidget.CounterFrame
     - set BreakWidget.pause
 - if BreakWidget.active and user tap on BreakWidget.StateButton.stop
-    - set BreakWidget.inactive
+    - set BreakWidget.ready
 - if BreakWidget.pause and user tap on BreakWidget.StateButton.resume
     - set BreakWidget.active
-- if BreakWidget.inactive and user tap on BreakFrame.ShortcutsFrame.shortcut
+- if BreakWidget.ready and user tap on BreakFrame.ShortcutsFrame.shortcut
     - set BreakWidget.active
     - set timer counter value from break-counters-shortcuts.variable
 - if BreakWidget.active or BreakWidget.pause and user tap on BreakFrame.ShortcutsFrame.shortcut

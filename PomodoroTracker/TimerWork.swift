@@ -1,13 +1,13 @@
 import SwiftUI
 
 enum TimerWorkState {
-    case inactive
+    case ready
     case pause
     case active
     
     var buttonState: ButtonState {
         switch self {
-        case .inactive: return .start
+        case .ready: return .start
         case .pause: return .resume
         case .active: return .stop
         }
@@ -15,7 +15,7 @@ enum TimerWorkState {
     
     var shortcutMode: ShortcutMode {
         switch self {
-        case .inactive:
+        case .ready:
             return .counter
         case .pause, .active:
             return .extraCounter
@@ -27,11 +27,12 @@ class TimerWork: ObservableObject {
     private let defaultTime: Double = 1500 // 25 minutes in seconds
     
     @Published private(set) var remainingTime: Int
-    @Published private(set) var timerState: TimerWorkState = .inactive
+    @Published private(set) var timerState: TimerWorkState = .ready
     @Published private(set) var currentSelectedTime: Double
     let theme: AppTheme
     
-    let shortcuts = [5, 10, 15, 25] // in minutes
+    let countersTemplates = AppVariables.timerWorkCountersShortcuts
+    let extraCountersTemplates = AppVariables.timerWorkExtraCountersShortcuts
     
     init(theme: AppTheme) {
         self.theme = theme
@@ -43,19 +44,19 @@ class TimerWork: ObservableObject {
         switch timerState {
         case .active:
             timerState = .pause
-        case .pause, .inactive:
+        case .pause, .ready:
             timerState = .active
         }
     }
     
     func handleButtonTap() {
         switch timerState {
-        case .inactive:
+        case .ready:
             timerState = .active
         case .pause:
             timerState = .active
         case .active:
-            timerState = .inactive
+            timerState = .ready
             remainingTime = Int(defaultTime)
             currentSelectedTime = defaultTime
         }
@@ -64,7 +65,7 @@ class TimerWork: ObservableObject {
     func handleShortcutTap(_ value: Int) {
         let newTime = value * 60
         switch timerState {
-        case .inactive:
+        case .ready:
             remainingTime = newTime
             currentSelectedTime = Double(newTime)
             timerState = .active
@@ -79,7 +80,7 @@ class TimerWork: ObservableObject {
         if remainingTime > 0 {
             remainingTime -= 1
         } else {
-            timerState = .inactive
+            timerState = .ready
             remainingTime = Int(currentSelectedTime)
         }
     }
@@ -141,7 +142,7 @@ struct TimerWorkView: View {
             .cornerRadius(AppStyles.Layout.defaultCornerRadius)
             
             ShortcutButtonsView(
-                shortcuts: timerWork.shortcuts,
+                shortcuts: timerWork.timerState == .ready ? timerWork.countersTemplates : timerWork.extraCountersTemplates,
                 theme: timerWork.theme,
                 mode: timerWork.timerState.shortcutMode,
                 action: timerWork.handleShortcutTap

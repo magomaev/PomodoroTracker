@@ -13,14 +13,14 @@ Intro:
         - use TimerFrame, BreakFrame design expanded
 - TimerWork, BreakWidget state
     - off
-        - set chart.inactive
-        - set counter.inactive
+        - set chart.ready
+        - set counter.ready
         - set statebutton.start
         - set shortcut.mode.counter-template
         - set TimerFrame / BreakFrame collapsed state
         - use TimerWork / BreakWidget collapsed design
     - inactive
-        - set chart.inactive
+        - set chart.ready
         - set counter.ready
         - set statebutton.start
         - set shortcut.mode.counter-template
@@ -64,7 +64,7 @@ Intro:
         - use Chart.pause design
     - inactive
         - stop chart animation
-        - use Chart.inactive design
+        - use Chart.ready design
 - Counter
     - ready
         - counting not started, used default value
@@ -75,7 +75,7 @@ Intro:
     - inactive
         - stop counting
             - The counter is reset to default value
-        - use Counter.inactive design
+        - use Counter.ready design
     - pause
         - pause counting
         - use Counter.muted design

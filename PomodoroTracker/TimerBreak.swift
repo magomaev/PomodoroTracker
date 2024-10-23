@@ -1,14 +1,14 @@
 import SwiftUI
 /* 123 */
 enum TimerBreakState {
-    case inactive
+    case ready
     case pause
     case active
     case off
     
     var buttonState: ButtonState {
         switch self {
-        case .inactive: return .start
+        case .ready: return .start
         case .pause: return .resume
         case .active: return .stop
         case .off: return .start
@@ -17,7 +17,7 @@ enum TimerBreakState {
     
     var shortcutMode: ShortcutMode {
         switch self {
-        case .inactive, .off:
+        case .ready, .off:
             return .counter
         case .pause, .active:
             return .extraCounter
@@ -33,7 +33,8 @@ class TimerBreak: ObservableObject {
     @Published private(set) var currentSelectedTime: Double
     let theme: AppTheme
     
-    let shortcuts = [1, 3, 5, 10] // in minutes
+    let countersTemplates = AppVariables.timerBreakCountersShortcuts
+    let extraCountersTemplates = AppVariables.timerBreakExtraCountersShortcuts
     
     init(theme: AppTheme) {
         self.theme = theme
@@ -45,44 +46,39 @@ class TimerBreak: ObservableObject {
         switch timerState {
         case .active:
             timerState = .pause
-        case .pause, .inactive:
+        case .pause, .ready:
             timerState = .active
         case .off:
             // Do nothing when off, or optionally change to inactive
-            timerState = .inactive
+            timerState = .ready
         }
     }
     
     func handleButtonTap() {
         switch timerState {
-        case .inactive:
+        case .ready:
             timerState = .active
         case .pause:
             timerState = .active
         case .active:
-            timerState = .inactive
+            timerState = .ready
             remainingTime = Int(defaultTime)
             currentSelectedTime = defaultTime
         case .off:
-            timerState = .inactive
+            timerState = .ready
         }
     }
     
     func handleShortcutTap(_ value: Int) {
         let newTime = value * 60
         switch timerState {
-        case .inactive:
+        case .ready, .off:
             remainingTime = newTime
             currentSelectedTime = Double(newTime)
             timerState = .active
         case .pause, .active:
             remainingTime += newTime
             currentSelectedTime += Double(newTime)
-        case .off:
-            // When off, set the time and switch to inactive
-            remainingTime = newTime
-            currentSelectedTime = Double(newTime)
-            timerState = .inactive
         }
     }
     
@@ -91,7 +87,7 @@ class TimerBreak: ObservableObject {
         if remainingTime > 0 {
             remainingTime -= 1
         } else {
-            timerState = .inactive
+            timerState = .ready
             remainingTime = Int(currentSelectedTime)
         }
     }
@@ -102,7 +98,7 @@ class TimerBreak: ObservableObject {
     }
     
     func toggleOffState() {
-        timerState = timerState == .off ? .inactive : .off
+        timerState = timerState == .off ? .ready : .off
     }
 }
 
@@ -118,7 +114,7 @@ struct TimerBreakView: View {
             }
             
             ShortcutButtonsView(
-                shortcuts: timerBreak.shortcuts,
+                shortcuts: timerBreak.timerState == .ready || timerBreak.timerState == .off ? timerBreak.countersTemplates : timerBreak.extraCountersTemplates,
                 theme: timerBreak.theme,
                 mode: timerBreak.timerState.shortcutMode,
                 action: timerBreak.handleShortcutTap

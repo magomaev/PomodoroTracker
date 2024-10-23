@@ -57,8 +57,8 @@ Designs:
         - gap: 0px
         - Header
         - CounterFrame
-            - Counter.inactive
-            - Chart.inactive
+            - Counter.ready
+            - Chart.ready
             - top and bottom height: 24px
             - width: fill
         - StateButton
