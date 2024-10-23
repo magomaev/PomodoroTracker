@@ -21,6 +21,7 @@
 		9234DD052CC6563E00C3EF2B /* TimerWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DCFC2CC6563E00C3EF2B /* TimerWork.swift */; };
 		9234DD082CC65B4A00C3EF2B /* PomodoroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DD072CC65B4A00C3EF2B /* PomodoroTrackerApp.swift */; };
 		9234DD0A2CC6830600C3EF2B /* CounterStateControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DD092CC6830500C3EF2B /* CounterStateControl.swift */; };
+		92C3350D2CC940AB006E39DA /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C3350C2CC940AA006E39DA /* TimerManager.swift */; };
 		92F25A952CC8E90F00CBDB69 /* TimerBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F25A942CC8E90F00CBDB69 /* TimerBreak.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		9234DCFC2CC6563E00C3EF2B /* TimerWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerWork.swift; sourceTree = "<group>"; };
 		9234DD072CC65B4A00C3EF2B /* PomodoroTrackerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PomodoroTrackerApp.swift; sourceTree = "<group>"; };
 		9234DD092CC6830500C3EF2B /* CounterStateControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterStateControl.swift; sourceTree = "<group>"; };
+		92C3350C2CC940AA006E39DA /* TimerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		92F25A942CC8E90F00CBDB69 /* TimerBreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerBreak.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +113,7 @@
 		921F22962CC442420052E2AB /* PomodoroTracker */ = {
 			isa = PBXGroup;
 			children = (
+				92C3350C2CC940AA006E39DA /* TimerManager.swift */,
 				92F25A942CC8E90F00CBDB69 /* TimerBreak.swift */,
 				9234DD092CC6830500C3EF2B /* CounterStateControl.swift */,
 				9234DD072CC65B4A00C3EF2B /* PomodoroTrackerApp.swift */,
@@ -286,6 +289,7 @@
 			files = (
 				9234DCFF2CC6563E00C3EF2B /* Chart.swift in Sources */,
 				92F25A952CC8E90F00CBDB69 /* TimerBreak.swift in Sources */,
+				92C3350D2CC940AB006E39DA /* TimerManager.swift in Sources */,
 				9234DD052CC6563E00C3EF2B /* TimerWork.swift in Sources */,
 				9234DD042CC6563E00C3EF2B /* Styles.swift in Sources */,
 				9234DD0A2CC6830600C3EF2B /* CounterStateControl.swift in Sources */,

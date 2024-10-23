@@ -1,4 +1,6 @@
 import SwiftUI
+import Combine  // Add this import
+
 /* 123 */
 enum TimerBreakState {
     case ready
@@ -27,6 +29,8 @@ enum TimerBreakState {
 
 class TimerBreak: ObservableObject {
     private let defaultTime: Double = 300 // 5 minutes in seconds
+    private let timerManager = TimerManager.shared
+    private var cancellables = Set<AnyCancellable>()  // Move this up before init
     
     @Published private(set) var remainingTime: Int
     @Published private(set) var timerState: TimerBreakState = .off
@@ -40,6 +44,15 @@ class TimerBreak: ObservableObject {
         self.theme = theme
         self.remainingTime = Int(defaultTime)
         self.currentSelectedTime = defaultTime
+        
+        // Observe TimerManager changes
+        timerManager.$activeTimer
+            .sink { [weak self] activeTimer in
+                if activeTimer == .work {
+                    self?.timerState = .off
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func handleCounterTap() {
@@ -75,6 +88,9 @@ class TimerBreak: ObservableObject {
         case .ready, .off:
             remainingTime = newTime
             currentSelectedTime = Double(newTime)
+            if timerState == .off {
+                toggleOffState()  // This will change state to ready and update TimerManager
+            }
             timerState = .active
         case .pause, .active:
             remainingTime += newTime
@@ -100,9 +116,10 @@ class TimerBreak: ObservableObject {
     func toggleOffState() {
         if timerState == .off {
             timerState = .ready
+            timerManager.activeTimer = .break_
         } else {
             timerState = .off
-            remainingTime = Int(currentSelectedTime)  // Reset time when turning off
+            timerManager.activeTimer = .none
         }
     }
 }
@@ -126,15 +143,7 @@ struct TimerBreakView: View {
             )
             
             // Temporary button to toggle off state
-            Button(action: {
-                timerBreak.toggleOffState()
-            }) {
-                Text(timerBreak.timerState == .off ? "Turn On" : "Turn Off")
-                    .padding()
-                    .background(timerBreak.theme.primary)
-                    .foregroundColor(timerBreak.theme.textPrimary)
-                    .cornerRadius(AppStyles.Layout.defaultCornerRadius)
-            }
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(timerBreak.theme.primary)

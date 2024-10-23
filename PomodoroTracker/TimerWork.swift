@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine  // Add this import
 
 enum TimerWorkState {
     case ready
@@ -27,9 +28,11 @@ enum TimerWorkState {
 
 class TimerWork: ObservableObject {
     private let defaultTime: Double = 1500 // 25 minutes in seconds
+    private let timerManager = TimerManager.shared
+    private var cancellables = Set<AnyCancellable>()  // Move this up before init
     
     @Published private(set) var remainingTime: Int
-    @Published private(set) var timerState: TimerWorkState = .off
+    @Published private(set) var timerState: TimerWorkState = .ready  // Change from .off to .ready
     @Published private(set) var currentSelectedTime: Double
     let theme: AppTheme
     
@@ -40,6 +43,15 @@ class TimerWork: ObservableObject {
         self.theme = theme
         self.remainingTime = Int(defaultTime)
         self.currentSelectedTime = defaultTime
+        
+        // Observe TimerManager changes
+        timerManager.$activeTimer
+            .sink { [weak self] activeTimer in
+                if activeTimer == .break_ {
+                    self?.timerState = .off
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func handleCounterTap() {
@@ -74,6 +86,9 @@ class TimerWork: ObservableObject {
         case .ready, .off:
             remainingTime = newTime
             currentSelectedTime = Double(newTime)
+            if timerState == .off {
+                toggleOffState()  // This will change state to ready and update TimerManager
+            }
             timerState = .active
         case .pause, .active:
             remainingTime += newTime
@@ -99,9 +114,10 @@ class TimerWork: ObservableObject {
     func toggleOffState() {
         if timerState == .off {
             timerState = .ready
+            timerManager.activeTimer = .work
         } else {
             timerState = .off
-            remainingTime = Int(currentSelectedTime)
+            timerManager.activeTimer = .none
         }
     }
 }
@@ -124,15 +140,6 @@ struct TimerWorkView: View {
                 action: timerWork.handleShortcutTap
             )
             
-            Button(action: {
-                timerWork.toggleOffState()
-            }) {
-                Text(timerWork.timerState == .off ? "Turn On" : "Turn Off")
-                    .padding()
-                    .background(timerWork.theme.primary)
-                    .foregroundColor(timerWork.theme.textPrimary)
-                    .cornerRadius(AppStyles.Layout.defaultCornerRadius)
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(timerWork.theme.primary)

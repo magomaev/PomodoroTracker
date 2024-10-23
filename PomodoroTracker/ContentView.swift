@@ -11,7 +11,7 @@ struct ContentView: View {
             
             VStack(spacing: AppStyles.Layout.gapBetweenContainers) {
                 TimerWorkView(timerWork: timerWork)
-                // TimerBreakView(timerBreak: timerBreak)
+                TimerBreakView(timerBreak: timerBreak)
             }
             .padding()
         }
