@@ -27,7 +27,7 @@ enum TimerWorkState {
 }
 
 class TimerWork: ObservableObject {
-    private let defaultTime: Double = 1500 // 25 minutes in seconds
+    private let defaultTime: Double = 60 // 25 minutes in seconds
     private let timerManager = TimerManager.shared
     private var cancellables = Set<AnyCancellable>()  // Move this up before init
     
@@ -127,12 +127,12 @@ struct TimerWorkView: View {
     
     var body: some View {
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            VStack {  // Container for timer content
+            VStack {
                 if timerWork.timerState == .off {
                     offStateView
                 } else {
                     activeStateView
-                        .frame(maxHeight: .infinity) // Only fill height when active
+                        .frame(maxHeight: .infinity)
                 }
             }
             .background(timerWork.theme.onPrimary)
@@ -145,8 +145,10 @@ struct TimerWorkView: View {
                 action: timerWork.handleShortcutTap
             )
         }
-        // .background(Color.red.opacity(0.2)) // Debug BG
         .frame(maxWidth: .infinity)
+        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
+            timerWork.updateTimer()  // Add timer update
+        }
     }
     
     private var offStateView: some View {
@@ -176,7 +178,6 @@ struct TimerWorkView: View {
         }
         .frame(height: 60)
         .padding()
-        .background(timerWork.theme.onPrimary)
         .cornerRadius(AppStyles.Layout.defaultCornerRadius)
     }
     
