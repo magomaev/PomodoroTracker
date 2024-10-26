@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AppVariables {
     /* Animation */
-    static let defaultAnimation: Animation = .easeInOut(duration: 1.3)
+    static let defaultAnimation: Animation = .easeInOut(duration: 0.3)
     
     /* Work Timer */
     static let timerWorkCounterDefault = 30

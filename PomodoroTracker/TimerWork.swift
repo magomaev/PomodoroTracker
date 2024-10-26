@@ -146,8 +146,8 @@ struct TimerWorkView: View {
             
             // Shortcuts stay fixed in size and position
             ShortcutButtonsView(
-                shortcuts: timerWork.timerState == .ready || timerWork.timerState == .off ? 
-                    timerWork.countersTemplates : timerWork.extraCountersTemplates,
+                counters: timerWork.countersTemplates,
+                extraCounters: timerWork.extraCountersTemplates,
                 theme: timerWork.theme,
                 mode: timerWork.timerState.shortcutMode,
                 action: timerWork.handleShortcutTap

@@ -23,6 +23,7 @@
 		9234DD0A2CC6830600C3EF2B /* CounterStateControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234DD092CC6830500C3EF2B /* CounterStateControl.swift */; };
 		92C3350D2CC940AB006E39DA /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C3350C2CC940AA006E39DA /* TimerManager.swift */; };
 		92F25A952CC8E90F00CBDB69 /* TimerBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F25A942CC8E90F00CBDB69 /* TimerBreak.swift */; };
+		92FE60812CCD9FE100F62B4B /* ShortcutButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FE607F2CCD9FE100F62B4B /* ShortcutButtonsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		9234DD092CC6830500C3EF2B /* CounterStateControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterStateControl.swift; sourceTree = "<group>"; };
 		92C3350C2CC940AA006E39DA /* TimerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		92F25A942CC8E90F00CBDB69 /* TimerBreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerBreak.swift; sourceTree = "<group>"; };
+		92FE607F2CCD9FE100F62B4B /* ShortcutButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutButtonsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		921F22962CC442420052E2AB /* PomodoroTracker */ = {
 			isa = PBXGroup;
 			children = (
+				92FE60802CCD9FE100F62B4B /* Views */,
 				92C3350C2CC940AA006E39DA /* TimerManager.swift */,
 				92F25A942CC8E90F00CBDB69 /* TimerBreak.swift */,
 				9234DD092CC6830500C3EF2B /* CounterStateControl.swift */,
@@ -154,6 +157,14 @@
 				921F22B72CC442440052E2AB /* PomodoroTrackerUITestsLaunchTests.swift */,
 			);
 			path = PomodoroTrackerUITests;
+			sourceTree = "<group>";
+		};
+		92FE60802CCD9FE100F62B4B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92FE607F2CCD9FE100F62B4B /* ShortcutButtonsView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +308,7 @@
 				9234DD032CC6563E00C3EF2B /* ContentView.swift in Sources */,
 				9234DD002CC6563E00C3EF2B /* Shortcut.swift in Sources */,
 				9234DD082CC65B4A00C3EF2B /* PomodoroTrackerApp.swift in Sources */,
+				92FE60812CCD9FE100F62B4B /* ShortcutButtonsView.swift in Sources */,
 				9234DD022CC6563E00C3EF2B /* Variables.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

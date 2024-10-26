@@ -147,8 +147,8 @@ struct TimerBreakView: View {
             
             // Shortcuts stay fixed in size and position
             ShortcutButtonsView(
-                shortcuts: timerBreak.timerState == .ready || timerBreak.timerState == .off ? 
-                    timerBreak.countersTemplates : timerBreak.extraCountersTemplates,
+                counters: timerBreak.countersTemplates,
+                extraCounters: timerBreak.extraCountersTemplates,
                 theme: timerBreak.theme,
                 mode: timerBreak.timerState.shortcutMode,
                 action: timerBreak.handleShortcutTap
