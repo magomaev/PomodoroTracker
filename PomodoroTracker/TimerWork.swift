@@ -49,6 +49,8 @@ class TimerWork: ObservableObject {
             .sink { [weak self] activeTimer in
                 if activeTimer == .break_ {
                     self?.timerState = .off
+                } else if activeTimer == .work && self?.timerState == .off {
+                    self?.timerState = .ready
                 }
             }
             .store(in: &cancellables)
@@ -130,9 +132,11 @@ struct TimerWorkView: View {
             VStack {
                 if timerWork.timerState == .off {
                     offStateView
+                        .transition(.opacity.combined(with: .scale))
                 } else {
                     activeStateView
                         .frame(maxHeight: .infinity)
+                        .transition(.opacity.combined(with: .scale))
                 }
             }
             .background(timerWork.theme.onPrimary)
@@ -144,10 +148,11 @@ struct TimerWorkView: View {
                 mode: timerWork.timerState.shortcutMode,
                 action: timerWork.handleShortcutTap
             )
+            .transition(.opacity)
         }
         .frame(maxWidth: .infinity)
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
-            timerWork.updateTimer()  // Add timer update
+            timerWork.updateTimer()
         }
     }
     

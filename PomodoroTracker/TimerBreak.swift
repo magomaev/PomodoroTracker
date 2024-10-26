@@ -50,6 +50,8 @@ class TimerBreak: ObservableObject {
             .sink { [weak self] activeTimer in
                 if activeTimer == .work {
                     self?.timerState = .off
+                } else if activeTimer == .break_ && self?.timerState == .off {
+                    self?.timerState = .ready
                 }
             }
             .store(in: &cancellables)
@@ -129,12 +131,14 @@ struct TimerBreakView: View {
     
     var body: some View {
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            VStack {  // Container for timer content
+            VStack {
                 if timerBreak.timerState == .off {
                     offStateView
+                        .transition(.opacity.combined(with: .scale))
                 } else {
                     activeStateView
-                        .frame(maxHeight: .infinity) // Only fill height when active
+                        .frame(maxHeight: .infinity)
+                        .transition(.opacity.combined(with: .scale))
                 }
             }
             .background(timerBreak.theme.onPrimary)
@@ -146,8 +150,8 @@ struct TimerBreakView: View {
                 mode: timerBreak.timerState.shortcutMode,
                 action: timerBreak.handleShortcutTap
             )
+            .transition(.opacity)
         }
-        // .background(Color.red.opacity(0.2)) // Debug BG
         .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea(.all)
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
