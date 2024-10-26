@@ -138,20 +138,13 @@ struct TimerWorkView: View {
     @ObservedObject var timerWork: TimerWork
     
     var body: some View {
+        // Main container that will grow with timer
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            VStack {
-                if timerWork.timerState == .off {
-                    offStateView
-                        .transition(.opacity.combined(with: .scale))
-                } else {
-                    activeStateView
-                        .frame(maxHeight: .infinity)
-                        .transition(.opacity.combined(with: .scale))
-                }
-            }
-            .background(timerWork.theme.onPrimary)
-            .cornerRadius(AppStyles.Layout.defaultCornerRadius)
+            // Timer widget container
+            timerContainer
+                .animation(AppVariables.defaultAnimation, value: timerWork.timerState)
             
+            // Shortcuts stay fixed in size and position
             ShortcutButtonsView(
                 shortcuts: timerWork.timerState == .ready || timerWork.timerState == .off ? 
                     timerWork.countersTemplates : timerWork.extraCountersTemplates,
@@ -159,12 +152,24 @@ struct TimerWorkView: View {
                 mode: timerWork.timerState.shortcutMode,
                 action: timerWork.handleShortcutTap
             )
-            .transition(.opacity)
         }
         .frame(maxWidth: .infinity)
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
             timerWork.updateTimer()
         }
+    }
+    
+    private var timerContainer: some View {
+        VStack {
+            if timerWork.timerState == .off {
+                offStateView
+            } else {
+                activeStateView
+                    .frame(maxHeight: .infinity)
+            }
+        }
+        .background(timerWork.theme.onPrimary)
+        .cornerRadius(AppStyles.Layout.defaultCornerRadius)
     }
     
     private var offStateView: some View {

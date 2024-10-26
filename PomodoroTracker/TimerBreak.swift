@@ -139,20 +139,13 @@ struct TimerBreakView: View {
     @ObservedObject var timerBreak: TimerBreak
     
     var body: some View {
+        // Main container that will grow with timer
         VStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            VStack {
-                if timerBreak.timerState == .off {
-                    offStateView
-                        .transition(.opacity.combined(with: .scale))
-                } else {
-                    activeStateView
-                        .frame(maxHeight: .infinity)
-                        .transition(.opacity.combined(with: .scale))
-                }
-            }
-            .background(timerBreak.theme.onPrimary)
-            .cornerRadius(AppStyles.Layout.defaultCornerRadius)
+            // Timer widget container
+            timerContainer
+                .animation(AppVariables.defaultAnimation, value: timerBreak.timerState)
             
+            // Shortcuts stay fixed in size and position
             ShortcutButtonsView(
                 shortcuts: timerBreak.timerState == .ready || timerBreak.timerState == .off ? 
                     timerBreak.countersTemplates : timerBreak.extraCountersTemplates,
@@ -160,13 +153,25 @@ struct TimerBreakView: View {
                 mode: timerBreak.timerState.shortcutMode,
                 action: timerBreak.handleShortcutTap
             )
-            .transition(.opacity)
         }
         .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea(.all)
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
             timerBreak.updateTimer()
         }
+    }
+    
+    private var timerContainer: some View {
+        VStack {
+            if timerBreak.timerState == .off {
+                offStateView
+            } else {
+                activeStateView
+                    .frame(maxHeight: .infinity)
+            }
+        }
+        .background(timerBreak.theme.onPrimary)
+        .cornerRadius(AppStyles.Layout.defaultCornerRadius)
     }
     
     private var offStateView: some View {
