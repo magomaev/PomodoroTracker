@@ -60,45 +60,50 @@ class TimerBreak: ObservableObject {
     }
     
     func handleCounterTap() {
-        switch timerState {
-        case .active:
-            timerState = .pause
-        case .pause, .ready:
-            timerState = .active
-        case .off:
-            // Do nothing when off, or optionally change to inactive
-            timerState = .ready
+        withAnimation(AppVariables.defaultAnimation) {
+            switch timerState {
+            case .active:
+                timerState = .pause
+            case .pause, .ready:
+                timerState = .active
+            case .off:
+                timerState = .ready
+            }
         }
     }
     
     func handleButtonTap() {
-        switch timerState {
-        case .ready:
-            timerState = .active
-        case .pause:
-            timerState = .active
-        case .active:
-            timerState = .ready
-            remainingTime = Int(defaultTime)
-            currentSelectedTime = defaultTime
-        case .off:
-            timerState = .ready
+        withAnimation(AppVariables.defaultAnimation) {
+            switch timerState {
+            case .ready:
+                timerState = .active
+            case .pause:
+                timerState = .active
+            case .active:
+                timerState = .ready
+                remainingTime = Int(defaultTime)
+                currentSelectedTime = defaultTime
+            case .off:
+                timerState = .ready
+            }
         }
     }
     
     func handleShortcutTap(_ value: Int) {
         let newTime = value * 60
-        switch timerState {
-        case .ready, .off:
-            remainingTime = newTime
-            currentSelectedTime = Double(newTime)
-            if timerState == .off {
-                toggleOffState()  // This will change state to ready and update TimerManager
+        withAnimation(AppVariables.defaultAnimation) {
+            switch timerState {
+            case .ready, .off:
+                remainingTime = newTime
+                currentSelectedTime = Double(newTime)
+                if timerState == .off {
+                    toggleOffState()
+                }
+                timerState = .active
+            case .pause, .active:
+                remainingTime += newTime
+                currentSelectedTime += Double(newTime)
             }
-            timerState = .active
-        case .pause, .active:
-            remainingTime += newTime
-            currentSelectedTime += Double(newTime)
         }
     }
     
@@ -118,12 +123,14 @@ class TimerBreak: ObservableObject {
     }
     
     func toggleOffState() {
-        if timerState == .off {
-            timerState = .ready
-            timerManager.activeTimer = .break_
-        } else {
-            timerState = .off
-            timerManager.activeTimer = .none
+        withAnimation(AppVariables.defaultAnimation) {
+            if timerState == .off {
+                timerState = .ready
+                timerManager.activeTimer = .break_
+            } else {
+                timerState = .off
+                timerManager.activeTimer = .none
+            }
         }
     }
 }

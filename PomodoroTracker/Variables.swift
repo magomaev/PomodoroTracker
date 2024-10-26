@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct AppVariables {
-
+    /* Animation */
+    static let defaultAnimation: Animation = .easeInOut(duration: 1.3)
+    
     /* Work Timer */
     static let timerWorkCounterDefault = 30
     static let timerWorkCountersShortcuts = [10, 15, 45, 60]

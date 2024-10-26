@@ -12,10 +12,10 @@ struct ContentView: View {
             
             VStack(spacing: 60) {
                 TimerWorkView(timerWork: timerWork)
-                    .animation(.easeInOut(duration: 0.3), value: timerWork.timerState)
+                    .animation(AppVariables.defaultAnimation, value: timerWork.timerState)
                 
                 TimerBreakView(timerBreak: timerBreak)
-                    .animation(.easeInOut(duration: 0.3), value: timerBreak.timerState)
+                    .animation(AppVariables.defaultAnimation, value: timerBreak.timerState)
             }
             .padding()
             .gesture(
@@ -24,7 +24,7 @@ struct ContentView: View {
                         let verticalAmount = gesture.translation.height
                         let verticalThreshold: CGFloat = 50
                         
-                        withAnimation(.easeInOut(duration: 0.3)) {
+                        withAnimation(AppVariables.defaultAnimation) {
                             if verticalAmount < -verticalThreshold {
                                 // Swipe up
                                 if timerBreak.timerState == .off {
