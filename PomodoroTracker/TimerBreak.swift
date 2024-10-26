@@ -37,13 +37,15 @@ class TimerBreak: ObservableObject {
     @Published private(set) var currentSelectedTime: Double
     let theme: AppTheme
     
-    let countersTemplates = AppVariables.timerBreakCountersShortcuts
-    let extraCountersTemplates = AppVariables.timerBreakExtraCountersShortcuts
+    @Published private(set) var countersTemplates: [Shortcut]
+    @Published private(set) var extraCountersTemplates: [Shortcut]
     
     init(theme: AppTheme) {
         self.theme = theme
         self.remainingTime = Int(defaultTime)
         self.currentSelectedTime = defaultTime
+        self.countersTemplates = AppVariables.timerBreakCountersShortcuts.map { Shortcut(value: $0) }
+        self.extraCountersTemplates = AppVariables.timerBreakExtraCountersShortcuts.map { Shortcut(value: $0) }
         
         // Observe TimerManager changes
         timerManager.$activeTimer
@@ -145,7 +147,8 @@ struct TimerBreakView: View {
             .cornerRadius(AppStyles.Layout.defaultCornerRadius)
             
             ShortcutButtonsView(
-                shortcuts: timerBreak.timerState == .ready || timerBreak.timerState == .off ? timerBreak.countersTemplates : timerBreak.extraCountersTemplates,
+                shortcuts: timerBreak.timerState == .ready || timerBreak.timerState == .off ? 
+                    timerBreak.countersTemplates : timerBreak.extraCountersTemplates,
                 theme: timerBreak.theme,
                 mode: timerBreak.timerState.shortcutMode,
                 action: timerBreak.handleShortcutTap

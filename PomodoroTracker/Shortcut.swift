@@ -5,13 +5,23 @@ enum ShortcutMode {
     case extraCounter
 }
 
+struct Shortcut: Identifiable {
+    let id: UUID
+    let value: Int
+    
+    init(value: Int) {
+        self.id = UUID()
+        self.value = value
+    }
+}
+
 struct ShortcutButtonsView: View {
-    let shortcuts: [Int]
+    let shortcuts: [Shortcut]
     let theme: AppTheme
     let action: (Int) -> Void
     let mode: ShortcutMode
     
-    init(shortcuts: [Int], theme: AppTheme, mode: ShortcutMode, action: @escaping (Int) -> Void) {
+    init(shortcuts: [Shortcut], theme: AppTheme, mode: ShortcutMode, action: @escaping (Int) -> Void) {
         self.shortcuts = shortcuts
         self.theme = theme
         self.mode = mode
@@ -20,11 +30,11 @@ struct ShortcutButtonsView: View {
     
     var body: some View {
         HStack(spacing: AppStyles.Layout.gapBetweenItems) {
-            ForEach(shortcuts, id: \.self) { value in
+            ForEach(shortcuts) { shortcut in
                 Button(action: {
-                    action(value)
+                    action(shortcut.value)
                 }) {
-                    Text(buttonText(for: value))
+                    Text(buttonText(for: shortcut.value))
                         .font(AppStyles.Typography.defaultStyle)
                         .foregroundColor(theme.textPrimary)
                         .frame(maxWidth: .infinity)

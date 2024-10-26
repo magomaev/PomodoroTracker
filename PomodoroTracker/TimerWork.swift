@@ -36,13 +36,15 @@ class TimerWork: ObservableObject {
     @Published private(set) var currentSelectedTime: Double
     let theme: AppTheme
     
-    let countersTemplates = AppVariables.timerWorkCountersShortcuts
-    let extraCountersTemplates = AppVariables.timerWorkExtraCountersShortcuts
+    @Published private(set) var countersTemplates: [Shortcut]
+    @Published private(set) var extraCountersTemplates: [Shortcut]
     
     init(theme: AppTheme) {
         self.theme = theme
         self.remainingTime = Int(defaultTime)
         self.currentSelectedTime = defaultTime
+        self.countersTemplates = AppVariables.timerWorkCountersShortcuts.map { Shortcut(value: $0) }
+        self.extraCountersTemplates = AppVariables.timerWorkExtraCountersShortcuts.map { Shortcut(value: $0) }
         
         // Observe TimerManager changes
         timerManager.$activeTimer
@@ -143,7 +145,8 @@ struct TimerWorkView: View {
             .cornerRadius(AppStyles.Layout.defaultCornerRadius)
             
             ShortcutButtonsView(
-                shortcuts: timerWork.timerState == .ready || timerWork.timerState == .off ? timerWork.countersTemplates : timerWork.extraCountersTemplates,
+                shortcuts: timerWork.timerState == .ready || timerWork.timerState == .off ? 
+                    timerWork.countersTemplates : timerWork.extraCountersTemplates,
                 theme: timerWork.theme,
                 mode: timerWork.timerState.shortcutMode,
                 action: timerWork.handleShortcutTap
